@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Escape from School 질문과 답변">
+  <meta name="theme-color" content="#090b14">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="community.css">
+  <title>Q&A | Escape from School</title>
+</head>
+<body>
+  <header class="top">
+    <nav class="nav wrap" aria-label="주요 메뉴">
+      <a class="brand" href="index.html"><span class="brand-mark">!</span> ESCAPE FROM SCHOOL</a>
+      <input class="menu-toggle" type="checkbox" id="menu-toggle">
+      <label class="menu-button" for="menu-toggle" aria-label="메뉴 열기"><span></span></label>
+      <div class="links">
+        <a href="intro.html">게임 소개</a><a href="character.html">캐릭터</a><a href="monsters.html">몬스터</a><a href="play.html">플레이 방법</a><a href="download.html">개발 현황</a>
+        <a class="nav-github" href="https://github.com/jw-astro09/escape-from-school" target="_blank" rel="noreferrer">GitHub ↗</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section class="page-hero qa-hero">
+      <div class="wrap">
+        <div class="eyebrow">COMMUNITY Q&A</div>
+        <h1>질문을 남기고<br><em>답을 받으세요.</em></h1>
+        <p class="lead">게임에 관한 질문, 의견, 버그 정보를 남겨 주세요. 질문은 로그인한 사용자만 등록할 수 있으며 답변은 운영자가 작성합니다.</p>
+      </div>
+    </section>
+    <section class="qa-section">
+      <div class="wrap qa-layout">
+        <aside class="qa-aside">
+          <div class="eyebrow">ASK A QUESTION</div>
+          <h2>도움이 필요하신가요?</h2>
+          <p>플레이 방법, 개발 현황, 오류에 관한 질문을 남길 수 있습니다.</p>
+          <button id="login-notice" class="button" type="button" onclick="document.querySelector('.account-button').click()">로그인하고 질문하기</button>
+          <form id="question-form" hidden>
+            <p class="signed-user"><span id="question-author"></span>님으로 질문합니다.</p>
+            <label>제목<input name="title" maxlength="80" required></label>
+            <label>내용<textarea name="body" maxlength="1600" required></textarea></label>
+            <button class="button" type="submit">질문 등록</button>
+          </form>
+        </aside>
+        <div class="qa-list-wrap">
+          <div class="eyebrow">LATEST QUESTIONS</div>
+          <div id="question-list" class="question-list"><p class="empty-state">질문을 불러오는 중입니다.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap copyright">© 2026 Escape from School. All rights reserved.</div></footer>
+  <script type="module" src="auth.js"></script>
+  <script type="module" src="qa.js"></script>
+</body>
+</html>
