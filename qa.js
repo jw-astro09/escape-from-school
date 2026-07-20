@@ -18,6 +18,11 @@ const list = document.querySelector("#question-list");
 let user = null;
 let isAdmin = false;
 let latestSnapshot = null;
+let authReady = false;
+
+loginNotice.addEventListener("click", () => {
+  document.querySelector(".account-button")?.click();
+});
 
 function escapeText(value) {
   const span = document.createElement("span");
@@ -50,6 +55,7 @@ onSnapshot(query(collection(db, "questions"), orderBy("createdAt", "desc")), ren
 });
 
 async function refreshUser(nextUser) {
+  authReady = true;
   user = nextUser;
   isAdmin = false;
   if (user) {
@@ -61,6 +67,7 @@ async function refreshUser(nextUser) {
   }
   form.hidden = !user;
   loginNotice.hidden = Boolean(user);
+  form.querySelector("button[type='submit']").disabled = !user;
   if (user) document.querySelector("#question-author").textContent = user.displayName || user.email;
   if (latestSnapshot) renderQuestions(latestSnapshot);
 }
@@ -69,21 +76,37 @@ onAuthStateChanged(auth, refreshUser);
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
-  if (!user) return;
+  const currentUser = auth.currentUser;
+  if (!authReady || !currentUser || !user || currentUser.uid !== user.uid) {
+    alert("질문을 등록하려면 먼저 로그인하세요.");
+    form.hidden = true;
+    loginNotice.hidden = false;
+    return;
+  }
+
   const values = new FormData(form);
+  const title = values.get("title").trim();
+  const body = values.get("body").trim();
+  if (!title || !body) return;
+
   const submit = form.querySelector("button");
   submit.disabled = true;
   try {
+    await currentUser.getIdToken();
     await addDoc(collection(db, "questions"), {
-      title: values.get("title").trim(),
-      body: values.get("body").trim(),
-      authorId: user.uid,
-      authorName: user.displayName || user.email,
+      title,
+      body,
+      authorId: currentUser.uid,
+      authorName: currentUser.displayName || currentUser.email,
       createdAt: serverTimestamp()
     });
     form.reset();
-  } catch {
-    alert("질문을 등록하지 못했습니다. 잠시 후 다시 시도하세요.");
+  } catch (error) {
+    if (error.code === "permission-denied") {
+      alert("로그인한 계정만 질문을 등록할 수 있습니다. 다시 로그인해 주세요.");
+    } else {
+      alert("질문을 등록하지 못했습니다. 잠시 후 다시 시도하세요.");
+    }
   } finally {
     submit.disabled = false;
   }

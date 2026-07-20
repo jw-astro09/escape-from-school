@@ -34,7 +34,7 @@
           <div class="eyebrow">ASK A QUESTION</div>
           <h2>도움이 필요하신가요?</h2>
           <p>플레이 방법, 개발 현황, 오류에 관한 질문을 남길 수 있습니다.</p>
-          <button id="login-notice" class="button" type="button" onclick="document.querySelector('.account-button').click()">로그인하고 질문하기</button>
+          <button id="login-notice" class="button" type="button">로그인하고 질문하기</button>
           <form id="question-form" hidden>
             <p class="signed-user"><span id="question-author"></span>님으로 질문합니다.</p>
             <label>제목<input name="title" maxlength="80" required></label>
@@ -49,8 +49,23 @@
       </div>
     </section>
   </main>
-  <footer><div class="wrap copyright">© 2026 Escape from School. All rights reserved.
-  <br>Designed by jw-astro09</div></footer>
+  <footer>
+    <div class="wrap footer-main">
+      <div class="footer-copy">
+        <strong>ESCAPE FROM SCHOOL</strong>
+        친구들을 구하고 학교를 탈출하는 2D 액션 게임.</div>
+      <div class="footer-links">
+        <a href="character.html">캐릭터</a>
+        <a href="monsters.html">몬스터</a>
+        <a href="play.html">플레이 방법</a>
+        <a href="download.html">Releases</a>
+        <a href="https://github.com/jw-astro09/escape-from-school" target="_blank" rel="noreferrer">GitHub ↗</a>
+      </div>
+    </div>
+    <div class="wrap copyright">© 2026 Escape from School. All rights reserved.
+    <br>
+    Designed by jw-astro09</div>
+  </footer>
   <script type="module" src="auth.js"></script>
   <script type="module" src="qa.js"></script>
 </body>
